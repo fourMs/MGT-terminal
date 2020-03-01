@@ -66,7 +66,7 @@ echo "capture every ${NTH_FRAME}th frame out of $NB_FRAMES frames"
 # make sure output dir exists
 mkdir -p $OUT_DIR
 
-FFMPEG_CMD="ffmpeg -loglevel panic -i \"$FILENAME\" -y -frames 1 -q:v 1 -vf \"select=not(mod(n\,$NTH_FRAME)),scale=-1:${HEIGHT},tile=${COLS}x${ROWS}\" \"$OUT_FILEPATH\""
+FFMPEG_CMD="ffmpeg -i \"$FILENAME\" -y -frames 1 -q:v 0 -vf \"select=not(mod(n\,$NTH_FRAME)),scale=-1:${HEIGHT},tile=${COLS}x${ROWS}\" \"$OUT_FILEPATH\""
 # `-loglevel panic` We don’t want to see any output. You can remove this option if you’re having any problem to see what went wrong
 # `-i "$FILENAME"` Input file
 # `-y` Override any existing output file
@@ -77,7 +77,7 @@ FFMPEG_CMD="ffmpeg -loglevel panic -i \"$FILENAME\" -y -frames 1 -q:v 1 -vf \"se
 # # `scale=-1:120` Resize to fit `120px` height, width is adjusted automatically to keep correct aspect ration.
 # # `tile=${COLS}x${ROWS}` Layout captured frames into this grid
 
-# print enire command for debugging purposes
+# print entire command for debugging purposes
 # echo $FFMPEG_CMD
 
 echo $OUT_FILEPATH
