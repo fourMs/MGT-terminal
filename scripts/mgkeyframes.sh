@@ -20,7 +20,13 @@
 #     0.1 - 2020-03-01
 # ------------------------------------------------------------------
 
-filename=$1
-namestring=`echo $i | cut -d'.' -f1`;
+if [ -z "$1" ]; then
+    echo "usage: ./mgkeyframes.sh VIDEO"
+    exit
+fi
 
-ffmpeg -skip_frame nokey -i filename -vsync 0 -r 30 -f image2 ${namestring}_%02d.tiff
+filename=$1
+namestring=`echo $filename | cut -d'.' -f1`;
+echo $namestring
+
+ffmpeg -skip_frame nokey -i $filename -vsync 0 -r 30 -f image2 ${namestring}_%02d.tiff
