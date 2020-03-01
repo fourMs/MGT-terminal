@@ -28,7 +28,7 @@ if [ -z "$ROWS" ]; then
     ROWS=3
 fi
 if [ -z "$OUT_FILENAME" ]; then
-    OUT_FILENAME=`echo ${NAMESTRING%.*}_preview.jpg`
+    OUT_FILENAME=`echo ${NAMESTRING%.*}_grid.jpg`
 fi
 
 OUT_FILEPATH=`echo $OUT_DIR/$OUT_FILENAME`
