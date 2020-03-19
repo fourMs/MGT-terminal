@@ -9,14 +9,13 @@
 #     Run script: sh [scriptname]
 #
 # Dependency:
-#      Uses ImageMagick
 #
 # Author:
 #     Alexander Refsum Jensenius
 #     University of Oslo
 #
 # Version:
-#     0.1 - 2020-03-01
+#     0.1 - 2020-03-19
 # ------------------------------------------------------------------
 
 
