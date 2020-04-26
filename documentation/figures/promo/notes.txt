@@ -1,0 +1,2 @@
+The tall image is of ratio 1:2
+The wide image is of ratio 3:1
