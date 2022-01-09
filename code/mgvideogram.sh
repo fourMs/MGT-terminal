@@ -28,7 +28,10 @@ echo "Reading file: $FILENAME"
 
 HEIGHT=`ffmpeg -i $FILENAME 2>&1 | grep Video: | grep -Po '\d{3,5}x\d{3,5}' | cut -d'x' -f2`
 WIDTH=`ffmpeg -i $FILENAME 2>&1 | grep Video: | grep -Po '\d{3,5}x\d{3,5}' | cut -d'x' -f1`
-FRAMES=`ffprobe -select_streams v -show_streams $FILENAME 2>/dev/null | grep nb_frames | sed -e 's/nb_frames=//'`
+FRAMES=`ffmpeg -i $FILENAME -map 0:v:0 -c copy -f null -y /dev/null 2>&1 | grep -Eo 'frame= *[0-9]+ *' | grep -Eo '[0-9]+' | tail -1`
+#The below frame counting is faster than the one above but does not work for
+#all file types
+#FRAMES=`ffprobe -select_streams v -show_streams $FILENAME 2>/dev/null | grep nb_frames | sed -e 's/nb_frames=//'`
 
 echo "File info: $WIDTH x $HEIGHT - $FRAMES frames"
 
