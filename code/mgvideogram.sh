@@ -26,14 +26,14 @@ OUT_DIR=`pwd`
 
 echo "Reading file: $FILENAME"
 
-HEIGHT=`ffmpeg -i $FILENAME 2>&1 | grep Video: | grep -Po '\d{3,5}x\d{3,5}' | cut -d'x' -f1`
-WIDTH=`ffmpeg -i $FILENAME 2>&1 | grep Video: | grep -Po '\d{3,5}x\d{3,5}' | cut -d'x' -f2`
+HEIGHT=`ffmpeg -i $FILENAME 2>&1 | grep Video: | grep -Po '\d{3,5}x\d{3,5}' | cut -d'x' -f2`
+WIDTH=`ffmpeg -i $FILENAME 2>&1 | grep Video: | grep -Po '\d{3,5}x\d{3,5}' | cut -d'x' -f1`
 FRAMES=`ffprobe -select_streams v -show_streams $FILENAME 2>/dev/null | grep nb_frames | sed -e 's/nb_frames=//'`
 
 echo "File info: $WIDTH x $HEIGHT - $FRAMES frames"
 
 echo "Rendering horizontal videogram..."
-ffmpeg -y -i pianist2.mp4 -frames 1 -vf scale=1:${HEIGHT}:sws_flags=area,normalize,tile=${FRAMES}x1 -aspect ${FRAMES}:${HEIGHT} ${NAMESTRING%.*}_horizontal.jpg
+ffmpeg -y -i $FILENAME -frames 1 -vf scale=1:${HEIGHT}:sws_flags=area,normalize,tile=${FRAMES}x1 -aspect ${FRAMES}:${HEIGHT} ${NAMESTRING%.*}_horizontal.jpg
 
 echo "Rendering vertical videogram..."
-ffmpeg -y -i pianist2.mp4 -vf scale=${WIDTH}:1:sws_flags=area,normalize,tile=1x${FRAMES} -aspect ${WIDTH}:${FRAMES} -frames 1 ${NAMESTRING%.*}_vertical.jpg
+ffmpeg -y -i $FILENAME -vf scale=${WIDTH}:1:sws_flags=area,normalize,tile=1x${FRAMES} -aspect ${WIDTH}:${FRAMES} -frames 1 ${NAMESTRING%.*}_vertical.jpg
