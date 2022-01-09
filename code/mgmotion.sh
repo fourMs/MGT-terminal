@@ -29,4 +29,4 @@ NAMESTRING=`echo $FILENAME | cut -d'.' -f1`;
 
 FRAMES=$2
 
-ffmpeg -i $FILENAME tblend=c0_mode=difference -an ${NAMESTRING}_motion.mp4
+ffmpeg -i $FILENAME -filter_complex "tblend=c0_mode=difference" -an ${NAMESTRING}_motion.mp4
