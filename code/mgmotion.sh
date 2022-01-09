@@ -29,4 +29,8 @@ NAMESTRING=`echo $FILENAME | cut -d'.' -f1`;
 
 FRAMES=$2
 
-ffmpeg -i $FILENAME -filter_complex "tblend=c0_mode=difference" -an ${NAMESTRING}_motion.mp4
+#ffmpeg -i $FILENAME -filter_complex "tblend=all_mode=difference" -an ${NAMESTRING}_motion.mp4
+
+# The above function ends up with a green background. It turns out that it is necessary to convert from YUV to RGB as the first part of the filter chain:
+
+ffmpeg -i $FILENAME -filter_complex "format=gbrp,tblend=all_mode=difference"  ${NAMESTRING}_motion.mp4
