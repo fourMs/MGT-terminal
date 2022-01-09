@@ -1,26 +1,39 @@
 #!/bin/bash
+# ------------------------------------------------------------------
+# Description:
+#     Will create horizontal and vertical videograms of video
+#
+# Usage:
+#     Place in folder with video files
+#     Make executable: chmod u+x [scriptname]
+#     Run script: sh [scriptname]
+#
+# Dependency:
+#     Using FFmpeg
+#
+# Author:
+#     Alexander Refsum Jensenius
+#     University of Oslo
+#
+# Version:
+#     0.1 - 2022-01-09
+# ------------------------------------------------------------------
 
-duration="$(ffprobe "$1" 2>&1 | grep Duration | awk  '{ print $2 }')"
-seconds="$(echo $duration \
-         | awk -F: '{ print ($1 * 3600) + ($2 * 60) + $3 }' \
-         | cut -d '.' -f 1)"
-fps="$(ffprobe "$1" 2>&1 \
-      | sed -n 's/.*, \(.*\) fps,.*/\1/p' \
-      | awk '{printf("%d\n",$1 + 0.5)}')"
-frames="$(( seconds*fps ))"
+FILENAME=$1
+# get video name without the path and extension
+NAMESTRING=`basename $FILENAME`
+OUT_DIR=`pwd`
 
+echo "Reading file: $FILENAME"
 
-ffmpeg -y -i pianist2.mp4-frames 1 -vf f'scale=1:{height}:sws_flags=area,normalize,tile={framecount}x1', '-aspect', f'{framecount}:{height}', target_name_y
+HEIGHT=`ffmpeg -i $FILENAME 2>&1 | grep Video: | grep -Po '\d{3,5}x\d{3,5}' | cut -d'x' -f1`
+WIDTH=`ffmpeg -i $FILENAME 2>&1 | grep Video: | grep -Po '\d{3,5}x\d{3,5}' | cut -d'x' -f2`
+FRAMES=`ffprobe -select_streams v -show_streams $FILENAME 2>/dev/null | grep nb_frames | sed -e 's/nb_frames=//'`
 
-1280 720
+echo "File info: $WIDTH x $HEIGHT - $FRAMES frames"
 
-# Check number of frames
-ffprobe -v error -select_streams v:0 -count_packets -show_entries stream=nb_read_packets -of csv=p=0 input.mp4
+echo "Rendering horizontal videogram..."
+ffmpeg -y -i pianist2.mp4 -frames 1 -vf scale=1:${HEIGHT}:sws_flags=area,normalize,tile=${FRAMES}x1 -aspect ${FRAMES}:${HEIGHT} ${NAMESTRING%.*}_horizontal.jpg
 
-
-#Rendering horizontal videogram
-ffmpeg -y -i pianist2.mp4 -frames 1 -vf scale=1:720:sws_flags=area,normalize,tile=230x1 -aspect 230:720 out_horizontal.png
-
-#Rendering vertical videogram
-ffmpeg -y -i pianist2.mp4 -vf scale=1280:1:sws_flags=area,normalize,tile=1x230 -aspect 1280:230 -frames 1 out_vertical.png
-
+echo "Rendering vertical videogram..."
+ffmpeg -y -i pianist2.mp4 -vf scale=${WIDTH}:1:sws_flags=area,normalize,tile=1x${FRAMES} -aspect ${WIDTH}:${FRAMES} -frames 1 ${NAMESTRING%.*}_vertical.jpg
