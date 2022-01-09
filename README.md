@@ -13,7 +13,11 @@ MGT for Terminal is based on the power of [FFmpeg](http://ffmpeg.org/) and [Imag
 
 ## Installation 
 
-On Ubuntu you can install these by simply typing this in the terminal:
+Download and extract the zip-file, or clone to where you want the toolbox: 
+
+    git clone https://github.com/fourMs/MGT-terminal.git
+
+You need to have [FFmpeg](http://ffmpeg.org/) and [ImageMagick](https://imagemagick.org/index.php) for it to work. On Ubuntu, these can be installed in the terminal like this:
 
     sudo apt install ffmpeg imagemagick
 
