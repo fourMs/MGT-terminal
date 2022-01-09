@@ -4,24 +4,20 @@
 
 The Musical Gestures Toolbox for Terminal is made for doing various video-related tricks in the terminal. This is mainly based on the power of [FFmpeg](http://ffmpeg.org/) and [ImageMagick](https://imagemagick.org/index.php).
 
-The toolbox was primarily developed for music research, with a
-particular focus on studying the motion of musicians and dancers. But it
-can be used for any type of motion-related analysis based on video
-recordings.
+The toolbox was primarily developed for music research, with a particular focus on studying the motion of musicians and dancers. But it can be used for any type of motion-related analysis based on video recordings.
 
-## Dependencies
 
-The toolbox is based on two core libraries:
+## Installation 
 
--   [FFmpeg](http://ffmpeg.org/)
--   [ImageMagick](https://imagemagick.org/index.php)
-
-On Ubuntu you can install these as simply as doing:
+On Ubuntu you can install these by simply typing this in the terminal:
 
     sudo apt install ffmpeg imagemagick
 
 On other systems you may have to download through the links above.
 
+## Tutorial
+
+Please check the [wiki](https://github.com/fourMs/MGT-terminal/wiki).
 
 ## History
 
