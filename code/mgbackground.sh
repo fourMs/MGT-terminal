@@ -19,4 +19,4 @@
 #     0.1 - 2020-03-01
 # ------------------------------------------------------------------
 
-convert *.tiff -background black -compose lighten -flatten background.tiff
+convert *.tiff -background black -compose lighten -flatten background.jpg
